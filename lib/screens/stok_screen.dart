@@ -14,6 +14,13 @@ class Pembelian extends StatefulWidget {
   State<Pembelian> createState() => _PembelianState();
 }
 
+class Penjualan extends StatefulWidget {
+  const Penjualan({super.key});
+
+  @override
+  State<Penjualan> createState() => _PenjualanState();
+}
+
 class _StokScreenState extends State<StokScreen> {
   @override
   Widget build(BuildContext context) {
@@ -44,7 +51,8 @@ class _StokScreenState extends State<StokScreen> {
                     children: [
                       // Center(child: Text('Data Pembelian')),
                       const Pembelian(),
-                      Center(child: Text('Data Penjualan')),
+                      const Penjualan(),
+                      // Center(child: Text('Data Penjualan')),
                     ],
                   ),
 
@@ -73,6 +81,197 @@ class _StokScreenState extends State<StokScreen> {
 }
 
 class _PembelianState extends State<Pembelian> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
+      children: [
+        // ---------------------------------------------------------
+        // KARTU 1: SISA STOK (HIJAU/GRADASI)
+        // ---------------------------------------------------------
+        Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            gradient: const LinearGradient(
+              colors: [Color(0xFF2AB091), Color(0xFF1E8E75)], // Hijau-hijauan
+            ),
+          ),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'sisa stok',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  Text(
+                    '36',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 40),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Pasar Legi',
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                    Text(
+                      '21 Februari 2026',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 15),
+        const Divider(
+          color: Colors.deepPurple,
+          thickness: 5,
+        ), // Garis Ungu Pembatas
+        const SizedBox(height: 15),
+
+        // ---------------------------------------------------------
+        // KARTU 2: RIWAYAT 1 (PUTIH) - DISINI MULAI KETIK ULANG LAGI
+        // ---------------------------------------------------------
+        Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'stok beli',
+                    style: TextStyle(color: Colors.black54, fontSize: 12),
+                  ),
+                  Text(
+                    '55',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 40),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Pasar Legi',
+                      style: TextStyle(color: Colors.black54, fontSize: 14),
+                    ),
+                    Text(
+                      '16 Februari 2026',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 15),
+
+        // ---------------------------------------------------------
+        // KARTU 3: RIWAYAT 2 (PUTIH) - KETIK ULANG LAGI DAN LAGI
+        // ---------------------------------------------------------
+        Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'stok beli',
+                    style: TextStyle(color: Colors.black54, fontSize: 12),
+                  ),
+                  Text(
+                    '75',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 40),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Pasar Legi',
+                      style: TextStyle(color: Colors.black54, fontSize: 14),
+                    ),
+                    Text(
+                      '11 Februari 2026',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PenjualanState extends State<Penjualan> {
   @override
   Widget build(BuildContext context) {
     return ListView(
