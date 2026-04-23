@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 10),
             child: Container(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 gradient: const LinearGradient(
@@ -65,21 +65,40 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
 
           // --- CARD 3: GRAFIK TREND (LINE CHART) ---
+          // --- CARD 3: GRAFIK TREND (LINE CHART) ---
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Trend Penjualan (Butir)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 28.0,
+              vertical: 1,
+            ), // Padding luar agar tidak full width
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white, // Warna background
+                borderRadius: BorderRadius.circular(
+                  15,
+                ), // Agar sudutnya melengkung sama seperti kartu lainnya
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(
+                  16.0,
+                ), // Padding dalam untuk isi konten
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Trend Penjualan (Butir)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(height: 200, child: LineChart(mainData())),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                SizedBox(height: 200, child: LineChart(mainData())),
-              ],
+              ),
             ),
           ),
-          const SizedBox(height: 30),
         ],
       ),
 
@@ -101,9 +120,15 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          gradient: const LinearGradient(
-            colors: [Colors.orangeAccent, Colors.deepOrange],
-          ),
+          color: const Color.fromARGB(
+            255,
+            42,
+            184,
+            147,
+          ), // Warna biru untuk kedua kotak kecil
+          // gradient: const LinearGradient(
+          //   colors: [Colors.orangeAccent, Colors.deepOrange],
+          // ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

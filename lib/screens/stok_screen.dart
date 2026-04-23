@@ -50,8 +50,8 @@ class _StokScreenState extends State<StokScreen> {
                   child: const TabBarView(
                     children: [
                       // Center(child: Text('Data Pembelian')),
-                      const Pembelian(),
-                      const Penjualan(),
+                      Pembelian(),
+                      Penjualan(),
                       // Center(child: Text('Data Penjualan')),
                     ],
                   ),
@@ -285,43 +285,75 @@ class _PenjualanState extends State<Penjualan> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             gradient: const LinearGradient(
-              colors: [Color(0xFF2AB091), Color(0xFF1E8E75)], // Hijau-hijauan
+              colors: [Color(0xFF2AB091), Color(0xFF1E8E75)],
             ),
           ),
           child: Row(
+            // Mengatur agar ada ruang yang sama antar kelompok informasi
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'sisa stok',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  Text(
-                    '36',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 40),
+              // SEKSI 1: BERAT
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
-                      'Pasar Legi',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      'berat (kg)',
+                      style: TextStyle(color: Colors.white70, fontSize: 11),
                     ),
+                    SizedBox(height: 4), // Jarak kecil antara label dan angka
                     Text(
-                      '21 Februari 2026',
+                      '8',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // SEKSI 2: KETERANGAN & TANGGAL
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'batok kelapa',
+                      style: TextStyle(color: Colors.white70, fontSize: 11),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '16 Feb 2026', // Gunakan singkatan jika terlalu panjang agar tetap linear
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // SEKSI 3: HARGA JUAL
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'harga jual',
+                      style: TextStyle(color: Colors.white70, fontSize: 11),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '435 000',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(
+                          0xFFB9F6CA,
+                        ), // Hijau terang agar kontras seperti di gambar
                       ),
                     ),
                   ],
@@ -355,39 +387,74 @@ class _PenjualanState extends State<Penjualan> {
             ],
           ),
           child: Row(
+            // Mengatur agar ada ruang yang sama antar kelompok informasi
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'stok beli',
-                    style: TextStyle(color: Colors.black54, fontSize: 12),
-                  ),
-                  Text(
-                    '55',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 40),
+              // SEKSI 1: BERAT
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
-                      'Pasar Legi',
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
+                      'berat (kg)',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
                     ),
+                    SizedBox(height: 4), // Jarak kecil antara label dan angka
                     Text(
-                      '16 Februari 2026',
+                      '8',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // SEKSI 2: KETERANGAN & TANGGAL
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'batok kelapa',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '16 Feb 2026', // Gunakan singkatan jika terlalu panjang agar tetap linear
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // SEKSI 3: HARGA JUAL
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'harga jual',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '435 000',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(
+                          255,
+                          17,
+                          199,
+                          68,
+                        ), // Hijau terang agar kontras seperti di gambar
                       ),
                     ),
                   ],
@@ -416,39 +483,74 @@ class _PenjualanState extends State<Penjualan> {
             ],
           ),
           child: Row(
+            // Mengatur agar ada ruang yang sama antar kelompok informasi
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'stok beli',
-                    style: TextStyle(color: Colors.black54, fontSize: 12),
-                  ),
-                  Text(
-                    '75',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 40),
+              // SEKSI 1: BERAT
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
-                      'Pasar Legi',
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
+                      'berat (kg)',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
                     ),
+                    SizedBox(height: 4), // Jarak kecil antara label dan angka
                     Text(
-                      '11 Februari 2026',
+                      '5',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // SEKSI 2: KETERANGAN & TANGGAL
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'batok kelapa',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '16 Jan 2026', // Gunakan singkatan jika terlalu panjang agar tetap linear
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // SEKSI 3: HARGA JUAL
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'harga jual',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '300 000',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(
+                          255,
+                          17,
+                          199,
+                          68,
+                        ), // Hijau terang agar kontras seperti di gambar
                       ),
                     ),
                   ],

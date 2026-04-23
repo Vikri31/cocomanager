@@ -1,7 +1,7 @@
 import 'package:cocomanager/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/loading_screen.dart'; // Import file loading
-import 'screens/home_screen.dart';   // Import file home
+// Import file home
 
 void main() {
   runApp(const CocoManagerApp());

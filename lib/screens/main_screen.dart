@@ -12,22 +12,22 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
-
-// Variabel untuk mencatat halaman mana yang aktif
+  // Variabel untuk mencatat halaman mana yang aktif
   int _currentIndex = 0;
 
   // DAFTAR HALAMANNYA DI SINI
   final List<Widget> _listHalaman = [
     const HomeScreen(), // Indeks 0
-    const StokScreen(),  // Indeks 1
+    const StokScreen(), // Indeks 1
     // const ProfilScreen(), // Indeks 2
   ];
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // Isi body otomatis berubah sesuai _currentIndex
-      body: _listHalaman[_currentIndex], 
-      
+      body: _listHalaman[_currentIndex],
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -43,5 +43,4 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
 }

@@ -13,18 +13,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     // 2. Logika Timer: Pindah ke Home setelah 3 detik
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 3), () {
       // Menggunakan pushReplacement agar Splash Screen dihapus dari tumpukan (stack)
       Navigator.pushReplacementNamed(context, '/home');
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: const Center(
         child: Text(
-          'prikitiw',
+          'CocoManager',
           style: TextStyle(
             fontSize: 40,
             fontWeight: FontWeight.bold,
