@@ -1,10 +1,18 @@
 import 'package:cocomanager/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/loading_screen.dart'; // Import file loading
-// Import file home
+import 'providers/transaction_provider.dart';
 
 void main() {
-  runApp(const CocoManagerApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TransactionProvider()..loadTransactions()),
+      ],
+      child: const CocoManagerApp(),
+    ),
+  );
 }
 
 class CocoManagerApp extends StatelessWidget {
