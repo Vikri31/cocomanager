@@ -41,22 +41,47 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.inventory_2), label: 'Stock'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: 'History'),
-          BottomNavigationBarItem(icon: Icon(Icons.analytics), label: 'Analisis'),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedItemColor: const Color(0xFF006D5B),
+            unselectedItemColor: Colors.grey.shade400,
+            showUnselectedLabels: true,
+            elevation: 0,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.inventory_2_rounded), label: 'Stock'),
+              BottomNavigationBarItem(icon: Icon(Icons.receipt_long_rounded), label: 'History'),
+              BottomNavigationBarItem(icon: Icon(Icons.analytics_rounded), label: 'Analisis'),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -19,17 +19,29 @@ class _StokScreenState extends State<StokScreen> {
       child: Scaffold(
         appBar: AppBar(title: const Text('Stok')),
         body: Column(
-          children: const [
+          children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: TabBar(
-                labelColor: Colors.blueAccent,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Colors.blueAccent,
-                tabs: [
-                  Tab(text: 'Pembelian'),
-                  Tab(text: 'Penjualan'),
-                ],
+              padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4))],
+                ),
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    color: const Color(0xFF006D5B),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.grey.shade600,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: Colors.transparent,
+                  tabs: const [
+                    Tab(text: 'Pembelian'),
+                    Tab(text: 'Penjualan'),
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -44,7 +56,7 @@ class _StokScreenState extends State<StokScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showAddTransactionDialog(context),
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: const Color(0xFF006D5B),
           child: const Icon(Icons.add, color: Colors.white),
         ),
       ),
@@ -172,11 +184,12 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Tambah Transaksi', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
+            const SizedBox(height: 5),
             Row(
               children: [
                 Expanded(
                   child: RadioListTile<String>(
+                    contentPadding: EdgeInsets.zero,
                     title: const Text('Beli'),
                     value: 'pembelian',
                     groupValue: _type,
@@ -185,6 +198,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 ),
                 Expanded(
                   child: RadioListTile<String>(
+                    contentPadding: EdgeInsets.zero,
                     title: const Text('Jual'),
                     value: 'penjualan',
                     groupValue: _type,
@@ -193,7 +207,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 ),
               ],
             ),
-            if (_type == 'penjualan')
+            const SizedBox(height: 20),
+            if (_type == 'penjualan') ...[
               DropdownButtonFormField<String>(
                 value: _category,
                 decoration: const InputDecoration(labelText: 'Jenis Barang'),
@@ -210,7 +225,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                   });
                 },
               ),
-            if (_category == 'kelapa')
+              const SizedBox(height: 15),
+            ],
+            if (_category == 'kelapa') ...[
               TextFormField(
                 controller: _amountController,
                 focusNode: _qtyFocusNode,
@@ -218,7 +235,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 keyboardType: TextInputType.number,
                 validator: (val) => val!.isEmpty ? 'Wajib diisi' : null,
               ),
-            if (_category != 'kelapa')
+              const SizedBox(height: 15),
+            ],
+            if (_category != 'kelapa') ...[
               TextFormField(
                 controller: _weightController,
                 focusNode: _qtyFocusNode,
@@ -226,6 +245,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 keyboardType: TextInputType.number,
                 validator: (val) => val!.isEmpty ? 'Wajib diisi' : null,
               ),
+              const SizedBox(height: 15),
+            ],
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -268,11 +289,12 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
                 ),
               ],
             ),
+            const SizedBox(height: 15),
             TextFormField(
               controller: _descController,
               decoration: InputDecoration(labelText: _type == 'pembelian' ? 'Lokasi / Keterangan' : 'Keterangan'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -343,6 +365,8 @@ class Pembelian extends StatelessWidget {
     TransactionModel? lastPurchase;
     if (purchases.isNotEmpty) lastPurchase = purchases.first;
 
+    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+
     return Column(
       children: [
         // KARTU SISA STOK
@@ -356,31 +380,57 @@ class Pembelian extends StatelessWidget {
                 colors: [Color(0xFF2AB091), Color(0xFF1E8E75)],
               ),
             ),
-            child: Row(
+            child: Column(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    const Text('sisa stok', style: TextStyle(color: Colors.white, fontSize: 12)),
-                    Text('$currentStock', style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('sisa stok', style: TextStyle(color: Colors.white, fontSize: 12)),
+                        Text('$currentStock', style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
+                      ],
+                    ),
+                    const SizedBox(width: 40),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(lastPurchase?.description ?? 'Belum ada data', style: const TextStyle(color: Colors.white, fontSize: 14)),
+                          if (lastPurchase != null)
+                            Text(DateFormat('dd MMMM yyyy').format(lastPurchase.date), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(width: 40),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                if (lastPurchase != null) ...[
+                  const Divider(color: Colors.white24, height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(lastPurchase?.description ?? 'Belum ada data', style: const TextStyle(color: Colors.white, fontSize: 14)),
-                      if (lastPurchase != null)
-                        Text(DateFormat('dd MMMM yyyy').format(lastPurchase.date), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Total Beli Terakhir', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                          Text(currencyFormat.format(lastPurchase.price), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text('Harga/Butir', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                          Text(currencyFormat.format(lastPurchase.amount > 0 ? lastPurchase.price / lastPurchase.amount : 0), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                        ],
+                      ),
                     ],
                   ),
-                ),
+                ],
               ],
             ),
           ),
         ),
-        const Divider(color: Colors.deepPurple, thickness: 5),
+        const SizedBox(height: 10),
         // LIST RIWAYAT PEMBELIAN
         Expanded(
           child: ListView.builder(
@@ -388,6 +438,8 @@ class Pembelian extends StatelessWidget {
             itemCount: purchases.length,
             itemBuilder: (context, index) {
               final trx = purchases[index];
+              final ppu = trx.amount > 0 ? trx.price / trx.amount : 0;
+
               return Container(
                 margin: const EdgeInsets.only(bottom: 15),
                 padding: const EdgeInsets.all(20.0),
@@ -398,24 +450,48 @@ class Pembelian extends StatelessWidget {
                     BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
                   ],
                 ),
-                child: Row(
+                child: Column(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        const Text('stok beli', style: TextStyle(color: Colors.black54, fontSize: 12)),
-                        Text('${trx.amount}', style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black87)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('stok beli', style: TextStyle(color: Colors.black54, fontSize: 12)),
+                            Text('${trx.amount}', style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black87)),
+                          ],
+                        ),
+                        const SizedBox(width: 40),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(trx.description, style: const TextStyle(color: Colors.black54, fontSize: 14)),
+                              Text(DateFormat('dd MMMM yyyy').format(trx.date), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(width: 40),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(trx.description, style: const TextStyle(color: Colors.black54, fontSize: 14)),
-                          Text(DateFormat('dd MMMM yyyy').format(trx.date), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
-                        ],
-                      ),
+                    const Divider(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Total Beli', style: TextStyle(color: Colors.black54, fontSize: 11)),
+                            Text(currencyFormat.format(trx.price), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text('Harga/Butir', style: TextStyle(color: Colors.black54, fontSize: 11)),
+                            Text(currencyFormat.format(ppu), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.deepOrange)),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -460,39 +536,44 @@ class Penjualan extends StatelessWidget {
             ],
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(labelQty, style: const TextStyle(color: Colors.black, fontSize: 11)),
-                    const SizedBox(height: 4),
-                    Text(valueQty, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black)),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(trx.category, style: const TextStyle(color: Colors.black, fontSize: 11)),
-                    const SizedBox(height: 4),
-                    Text(DateFormat('dd MMM yyyy').format(trx.date), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('harga jual', style: TextStyle(color: Colors.black, fontSize: 11)),
-                    const SizedBox(height: 4),
-                    Text(currencyFormat.format(trx.price), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 17, 199, 68))),
-                  ],
-                ),
-              ),
-            ],
+    // --- KOLOM 1: QTY ---
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(labelQty, style: const TextStyle(color: Colors.black, fontSize: 11)),
+        const SizedBox(height: 4),
+        Text(valueQty, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black)),
+      ],
+    ),
+    
+    // ATUR JARAK MANUAL ANTARA KOLOM 1 DAN KOLOM 2 DI SINI
+    const SizedBox(width: 20), 
+    
+    // --- KOLOM 2: TANGGAL & KATEGORI ---
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(trx.category, style: const TextStyle(color: Colors.black, fontSize: 11)),
+        const SizedBox(height: 4),
+        Text(DateFormat('dd MMM yyyy').format(trx.date), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+      ],
+    ),
+    
+    // ATUR JARAK MANUAL ANTARA KOLOM 2 DAN KOLOM 3 DI SINI
+    const SizedBox(width: 20), 
+    
+    // --- KOLOM 3: HARGA JUAL ---
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('harga jual', style: TextStyle(color: Colors.black, fontSize: 11)),
+        const SizedBox(height: 4),
+        Text(currencyFormat.format(trx.price), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 17, 199, 68))),
+      ],
+    ),
+  ],
           ),
         );
       },

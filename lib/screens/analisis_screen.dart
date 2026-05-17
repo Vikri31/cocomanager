@@ -66,8 +66,8 @@ class AnalisisScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))],
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4))],
             ),
             child: Row(
               children: [
@@ -80,14 +80,14 @@ class AnalisisScreen extends StatelessWidget {
                       centerSpaceRadius: 40,
                       sections: [
                         PieChartSectionData(
-                          color: const Color(0xFF7B61FF),
+                          color: const Color(0xFF006D5B),
                           value: comp['kelapa']! == 0 && comp['nonKelapa']! == 0 ? 50 : comp['kelapa'],
                           title: '${comp['kelapa']?.toStringAsFixed(0)}%',
                           radius: 20,
                           titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         PieChartSectionData(
-                          color: const Color(0xFFFF61A6),
+                          color: const Color(0xFFF4A261),
                           value: comp['kelapa']! == 0 && comp['nonKelapa']! == 0 ? 50 : comp['nonKelapa'],
                           title: '${comp['nonKelapa']?.toStringAsFixed(0)}%',
                           radius: 20,
@@ -104,7 +104,7 @@ class AnalisisScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFF7B61FF), shape: BoxShape.circle)),
+                          Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFF006D5B), shape: BoxShape.circle)),
                           const SizedBox(width: 5),
                           const Expanded(child: Text('penjualan kelapa', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold))),
                         ],
@@ -112,7 +112,7 @@ class AnalisisScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFF61A6), shape: BoxShape.circle)),
+                          Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFF4A261), shape: BoxShape.circle)),
                           const SizedBox(width: 5),
                           const Expanded(child: Text('penjualan non-kelapa', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold))),
                         ],
@@ -128,8 +128,8 @@ class AnalisisScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))],
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4))],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,12 +148,18 @@ class AnalisisScreen extends StatelessWidget {
                         bottomTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
-                            reservedSize: 30,
+                            reservedSize: 40,
                             interval: 2,
                             getTitlesWidget: (value, meta) {
                               const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
                               int index = value.toInt();
-                              if (index >= 0 && index < 12) return Text(months[index], style: const TextStyle(fontSize: 10));
+                              if (index >= 0 && index < 12) {
+                                return SideTitleWidget(
+                                  meta: meta,
+                                  space: 8,
+                                  child: Text(months[index], style: const TextStyle(fontSize: 10)),
+                                );
+                              }
                               return const Text('');
                             },
                           ),

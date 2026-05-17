@@ -10,8 +10,8 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TransactionProvider>();
-    final selectedDateStr = provider.selectedDateFilter == null 
-        ? 'Hari Ini' 
+    final selectedDateStr = provider.selectedDateFilter == null
+        ? 'Hari Ini'
         : DateFormat('dd MMM yyyy').format(provider.selectedDateFilter!);
 
     return DefaultTabController(
@@ -37,20 +37,47 @@ class HistoryScreen extends StatelessWidget {
               },
             ),
           ],
-          bottom: TabBar(
-            tabs: [
-              Tab(text: selectedDateStr),
-              const Tab(text: 'Bulanan'),
-            ],
-            labelColor: Colors.blueAccent,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.blueAccent,
-          ),
         ),
-        body: const TabBarView(
+        body: Column(
           children: [
-            _TodayHistoryTab(),
-            _MonthlyHistoryTab(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 28.0,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.03),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    color: const Color(0xFF006D5B),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.grey.shade600,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: Colors.transparent,
+                  tabs: [
+                    Tab(text: selectedDateStr),
+                    const Tab(text: 'Bulanan'),
+                  ],
+                ),
+              ),
+            ),
+            const Expanded(
+              child: TabBarView(
+                children: [_TodayHistoryTab(), _MonthlyHistoryTab()],
+              ),
+            ),
           ],
         ),
       ),
@@ -65,10 +92,16 @@ class _TodayHistoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<TransactionProvider>();
     final history = provider.filteredDailySales;
-    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currencyFormat = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
 
     if (history.isEmpty) {
-      return const Center(child: Text('Belum ada data penjualan pada tanggal ini'));
+      return const Center(
+        child: Text('Belum ada data penjualan pada tanggal ini'),
+      );
     }
 
     return ListView.builder(
@@ -90,12 +123,20 @@ class _TodayHistoryTab extends StatelessWidget {
               context: context,
               builder: (ctx) => AlertDialog(
                 title: const Text('Hapus Transaksi?'),
-                content: const Text('Apakah Anda yakin ingin menghapus data penjualan ini? Stok akan otomatis dikembalikan.'),
+                content: const Text(
+                  'Apakah Anda yakin ingin menghapus data penjualan ini? Stok akan otomatis dikembalikan.',
+                ),
                 actions: [
-                  TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
                   TextButton(
-                    onPressed: () => Navigator.pop(ctx, true), 
-                    child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+                    onPressed: () => Navigator.pop(ctx, false),
+                    child: const Text('Batal'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(ctx, true),
+                    child: const Text(
+                      'Hapus',
+                      style: TextStyle(color: Colors.red),
+                    ),
                   ),
                 ],
               ),
@@ -104,7 +145,9 @@ class _TodayHistoryTab extends StatelessWidget {
           onDismissed: (direction) {
             if (t.id != null) {
               provider.deleteTransaction(t.id!);
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Transaksi berhasil dihapus')));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Transaksi berhasil dihapus')),
+              );
             }
           },
           child: ListTile(
@@ -113,9 +156,20 @@ class _TodayHistoryTab extends StatelessWidget {
               backgroundColor: Colors.blueAccent.withOpacity(0.1),
               child: const Icon(Icons.sell, color: Colors.blueAccent),
             ),
-            title: Text('${t.amount} Butir Kelapa', style: const TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text('${t.date.hour.toString().padLeft(2, '0')}:${t.date.minute.toString().padLeft(2, '0')} - ${t.description}'),
-            trailing: Text(currencyFormat.format(t.price), style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+            title: Text(
+              '${t.amount} Butir Kelapa',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(
+              '${t.date.hour.toString().padLeft(2, '0')}:${t.date.minute.toString().padLeft(2, '0')} - ${t.description}',
+            ),
+            trailing: Text(
+              currencyFormat.format(t.price),
+              style: const TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         );
       },
@@ -130,7 +184,11 @@ class _MonthlyHistoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<TransactionProvider>();
     final history = provider.monthlyHistory;
-    final currencyFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currencyFormat = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
 
     if (history.isEmpty) {
       return const Center(child: Text('Belum ada histori bulanan'));
@@ -151,7 +209,11 @@ class _MonthlyHistoryTab extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
             ],
           ),
           child: Row(
@@ -161,9 +223,19 @@ class _MonthlyHistoryTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('kelapa terjual', style: TextStyle(color: Colors.black, fontSize: 11)),
+                    const Text(
+                      'kelapa terjual',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
+                    ),
                     const SizedBox(height: 4),
-                    Text('${item['kelapaTerjual']}', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black)),
+                    Text(
+                      '${item['kelapaTerjual']}',
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -171,9 +243,19 @@ class _MonthlyHistoryTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('periode', style: TextStyle(color: Colors.black, fontSize: 11)),
+                    const Text(
+                      'periode',
+                      style: TextStyle(color: Colors.black, fontSize: 11),
+                    ),
                     const SizedBox(height: 4),
-                    Text(periodStr, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                    Text(
+                      periodStr,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -181,9 +263,19 @@ class _MonthlyHistoryTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('pendapatan kotor', style: TextStyle(color: Color(0xFF1E8E75), fontSize: 11)),
+                    const Text(
+                      'pendapatan kotor',
+                      style: TextStyle(color: Color(0xFF1E8E75), fontSize: 11),
+                    ),
                     const SizedBox(height: 4),
-                    Text(currencyFormat.format(item['pendapatanKotor']), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF1E8E75))),
+                    Text(
+                      currencyFormat.format(item['pendapatanKotor']),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1E8E75),
+                      ),
+                    ),
                   ],
                 ),
               ),
