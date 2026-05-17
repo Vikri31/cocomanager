@@ -63,7 +63,29 @@ Aplikasi menggunakan **Bottom Navigation Bar** dengan 4 menu utama:
     - Penanganan constraint dan overflow error secara proaktif pada chart.
     - Memanfaatkan warna kontras tinggi (merah) untuk alert kritikal seperti stok rendah.
 
+---
+
 ## 6. Alur Data (Data Flow)
 1.  **Input:** Pengguna memasukkan transaksi lewat "Quick Sale" (Home) atau form (Stock).
 2.  **Pemrosesan State:** Provider memvalidasi input, mengeksekusi operasi database (Insert/Update) melalui fungsi di SQLite Helper.
 3.  **Sinkronisasi Real-Time:** Database lokal ter-update -> Provider memicu pembaruan state -> UI di-render ulang secara halus dan seketika.
+
+---
+
+## 7. Batasan Produk (Product Limitations)
+Untuk menjaga fokus pengembangan dan efisiensi kinerja aplikasi pada rilis saat ini, ditetapkan beberapa batasan produk sebagai berikut:
+1. **Penyimpanan Data Bersifat Lokal (Offline-First):** Seluruh data transaksi dan stok disimpan di memori internal perangkat menggunakan database SQLite. Aplikasi belum memiliki integrasi cloud, sehingga data akan hilang jika aplikasi dihapus atau perangkat mengalami kerusakan fisik.
+2. **Operasional Perangkat Tunggal (Single-Device Only):** Aplikasi dirancang untuk digunakan pada satu perangkat saja. Belum mendukung sinkronisasi real-time antar-perangkat (multi-device) untuk pengguna/karyawan yang berbeda secara bersamaan.
+3. **Absensi Autentikasi Pengguna (No User Authentication):** Aplikasi tidak dilengkapi dengan sistem login atau pembatasan hak akses (otorisasi). Siapa pun yang membuka aplikasi pada perangkat tersebut memiliki akses penuh ke seluruh fitur dan data keuangan.
+4. **Skema Produk Spesifik (Niche-Specific):** Aplikasi ini didesain khusus dengan parameter penjualan kelapa serta produk sampingannya (batok, sabut/kulit, dsb). Tidak direkomendasikan untuk digunakan pada jenis usaha retail umum yang memiliki variasi barang dagangan dinamis di luar industri kelapa.
+5. **Ketiadaan Integrasi Eksternal:** Aplikasi belum terintegrasi dengan sistem pembayaran digital (E-wallet/QRIS) maupun printer cetak struk kasir secara langsung.
+
+---
+
+## 8. Saran Pengembangan (Future Development Suggestions)
+Berdasarkan batasan produk saat ini, berikut adalah beberapa poin saran yang direkomendasikan untuk pengembangan sistem di masa mendatang:
+1. **Migrasi ke Cloud Database (Multi-Device Sync):** Mengintegrasikan sistem dengan database berbasis cloud (seperti Firebase Firestore, Supabase, atau PostgreSQL) agar data tersimpan aman di cloud dan memungkinkan sinkronisasi data antar-perangkat secara real-time untuk pemilik dan karyawan.
+2. **Implementasi Autentikasi Keamanan:** Menambahkan fitur otentikasi login pengguna (menggunakan Email/Password, OTP, atau Google Sign-In) serta pembagian peran (Role-Based Access Control) antara Pemilik Toko (Owner) dan Karyawan (Staff).
+3. **Ekspor Laporan Keuangan Secara Formal:** Menyediakan fitur untuk mengekspor riwayat transaksi harian, mingguan, dan laporan laba-rugi bulanan ke dalam format PDF atau spreadsheet Excel (.xlsx / .csv) guna mempermudah pelaporan eksternal atau arsip bisnis.
+4. **Integrasi Gerbang Pembayaran (Payment Gateway) & Printer Struk:** Menyediakan metode transaksi QRIS/E-Wallet otomatis di dalam aplikasi dan mendukung pencetakan struk fisik menggunakan koneksi Printer Bluetooth Thermal.
+5. **Fitur Analisis Prediktif Berbasis Kecerdasan Buatan (AI/ML):** Mengembangkan algoritma prediksi berbasis data historis transaksi untuk memproyeksikan kebutuhan stok kelapa di masa mendatang (*inventory forecasting*) guna menghindari penumpukan atau kekurangan stok menjelang musim puncak (*peak season*).
